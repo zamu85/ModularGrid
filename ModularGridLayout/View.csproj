@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DevExpress.Wpf.Core" Version="21.2.3" />
+		<PackageReference Include="DevExpress.Wpf.Grid" Version="21.2.3" />
+		<PackageReference Include="DevExpress.Wpf.Grid.Core" Version="21.2.3" />
+		<PackageReference Include="DevExpress.Wpf.LayoutControl" Version="21.2.3" />
+		<PackageReference Include="Micromed.Framework.Utility" Version="2.0.0.19" />
+		<PackageReference Include="EntityFramework" Version="6.4.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Persistence\Persistence.csproj" />
+		<ProjectReference Include="..\Services\Services.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>

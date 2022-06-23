@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="View\Exam\ExamGridView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\File\FileGridView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Layout\ExamFilesMasterDetails.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Layout\ThreeColumns.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\Patient\PatientGridView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\Exam\ExamGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\File\FileGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Layout\ExamFilesMasterDetails.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Layout\ThreeColumns.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Patient\PatientGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,57 @@
+﻿<Window
+    x:Class="ModularGridLayout.View.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:threeColumns="clr-namespace:View.View.Layout"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <DataTemplate x:Key="layout">
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding SelectedLayout}" Value="1">
+                    <threeColumns:ThreeColumns />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding ChangeLayoutCommand}"
+                CommandParameter="1"
+                Content="Layout 1" />
+
+            <Button
+                Command="{Binding ChangeLayoutCommand}"
+                CommandParameter="2"
+                Content="Layout 2" />
+
+            <Button
+                Command="{Binding ChangeLayoutCommand}"
+                CommandParameter="3"
+                Content="Layout 3" />
+        </StackPanel>
+        <ContentControl Grid.Row="3" Grid.Column="1"
+            ContentTemplateSelector=""
+    </Grid>
+</Window>
