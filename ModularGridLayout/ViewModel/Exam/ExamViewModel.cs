@@ -11,7 +11,7 @@ namespace View.ViewModel.Exam
     {
         private readonly ExamService _examService;
         private ExamDto _selectedExam;
-        private int _selectedLayout;
+        private int _selectedLayout = 1;
 
         public ExamViewModel(ExamService examService)
         {
@@ -50,7 +50,17 @@ namespace View.ViewModel.Exam
         private void onPatientSelected(PatientMessage message)
         {
             Exams.Clear();
-            _examService.GetExams(message.PatientId).ForEach(Exams.Add);
+
+            switch (_selectedLayout)
+            {
+                case 1:
+                    _examService.GetExams(message.PatientId).ForEach(Exams.Add);
+                    break;
+
+                case 2:
+                    _examService.GetPatientExamWithFiles(message.PatientId).ForEach(Exams.Add);
+                    break;
+            }
         }
     }
 }

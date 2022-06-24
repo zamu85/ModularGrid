@@ -22,5 +22,29 @@ namespace Services.Exam
                 RecordingDate = x.RecordingDate,
             });
         }
+
+        public IEnumerable<ExamDto> GetPatientExamWithFiles(int patientId)
+        {
+            var result = _unitOfWork.ExamRepository.GetPatientExamWithFiles(patientId);
+
+            if (result != null)
+            {
+                return result.Select(e => new ExamDto()
+                {
+                    Code = e.Code,
+                    Comment = e.Comment,
+                    RecordingDate = e.RecordingDate,
+                    ExamId = e.ExamId,
+                    Files = e.Files.Select(f => new Commonality.Dto.File.FileDto()
+                    {
+                        Comment = f.Comment,
+                        ExamType = f.ExamType,
+                        RecordingTime = f.RecordingTime
+                    }).ToList()
+                });
+            }
+
+            return null;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Model.Exam;
+﻿using Microsoft.EntityFrameworkCore;
+using Model.Exam;
 
 namespace Persistence.Exam
 {
@@ -6,6 +7,12 @@ namespace Persistence.Exam
     {
         public ExamRepository(PatientContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Model.Exam.Exam> GetPatientExamWithFiles(int patientId)
+        {
+            return context.Exam.Where(e => e.PatientId == patientId)
+                .Include(f => f.Files);
         }
     }
 }

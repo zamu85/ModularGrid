@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace View.View.Layout
 {
     /// <summary>
-    /// Interaction logic for ExamFilesMasterDetails.xaml
+    /// Interaction logic for ExamFilesMasterDetailView.xaml
     /// </summary>
-    public partial class ExamFilesMasterDetails : UserControl
+    public partial class ExamFilesMasterDetailView : UserControl
     {
-        public ExamFilesMasterDetails()
+        public ExamFilesMasterDetailView()
         {
             InitializeComponent();
         }

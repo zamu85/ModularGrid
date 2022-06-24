@@ -16,9 +16,9 @@
             ItemsSource="{Binding Patients}"
             SelectedItem="{Binding SelectedPatient}">
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Width="3*" FieldName="FirstName" />
-                <dxg:GridColumn Width="3*" FieldName="LastName" />
-                <dxg:GridColumn Width="3*" FieldName="BirthDate" />
+                <dxg:GridColumn Width="Auto" FieldName="FirstName" />
+                <dxg:GridColumn Width="Auto" FieldName="LastName" />
+                <dxg:GridColumn Width="Auto" FieldName="BirthDate" />
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
                 <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="VisibleRows" />

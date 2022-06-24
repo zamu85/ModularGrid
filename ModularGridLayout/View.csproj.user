@@ -13,7 +13,7 @@
     <Compile Update="View\File\FileGridView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Layout\ExamFilesMasterDetails.xaml.cs">
+    <Compile Update="View\Layout\ExamFilesMasterDetailView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\Layout\ThreeColumns.xaml.cs">
@@ -30,7 +30,7 @@
     <Page Update="View\File\FileGridView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Layout\ExamFilesMasterDetails.xaml">
+    <Page Update="View\Layout\ExamFilesMasterDetailView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Layout\ThreeColumns.xaml">

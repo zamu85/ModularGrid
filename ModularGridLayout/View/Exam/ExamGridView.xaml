@@ -7,33 +7,56 @@
     xmlns:file="clr-namespace:View.View.File"
     xmlns:local="clr-namespace:View.View.Patient"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:valueConverter="clr-namespace:View.ValueConverters"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <valueConverter:LayoutToBoolConverter x:Key="LayoutToBool" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <dxg:GridControl
             AutoGenerateColumns="AddNew"
             EnableSmartColumnsGeneration="True"
             ItemsSource="{Binding Exams}"
             SelectedItem="{Binding SelectedExam}">
+            <dxg:GridControl.View>
+                <!--<dxg:TableView
+                    AutoWidth="True"
+                    BestFitModeOnSourceChange="VisibleRows"
+                    IsDetailButtonVisibleBinding="{DXBinding 'Row.Files.Count > 0'}" />-->
+                <dxg:TableView
+                    AutoWidth="True"
+                    BestFitModeOnSourceChange="VisibleRows"
+                    IsDetailButtonVisibleBinding="{Binding View.DataContext.SelectedLayout, Converter={StaticResource LayoutToBool}}" />
+            </dxg:GridControl.View>
+
             <dxg:GridControl.DetailDescriptor>
                 <dxg:DetailDescriptorSelector>
-                    <dxg:DetailDescriptorTrigger Binding="{Binding Path=SelectedLayput}" Value="1">
-                        <dxg:DataControlDetailDescriptor>
-                            <file:FileGridView />
+                    <dxg:DetailDescriptorTrigger Binding="{DXBinding 'Files.Count > 0'}" Value="True">
+                        <dxg:DataControlDetailDescriptor ItemsSourceBinding="{Binding Files}">
+                            <dxg:DataControlDetailDescriptor.DataControl>
+                                <dxg:GridControl AutoGenerateColumns="AddNew">
+                                    <dxg:GridControl.View>
+                                        <dxg:TableView
+                                            AutoWidth="True"
+                                            DetailHeaderContent="Files"
+                                            ShowGroupPanel="False" />
+                                    </dxg:GridControl.View>
+                                </dxg:GridControl>
+                            </dxg:DataControlDetailDescriptor.DataControl>
                         </dxg:DataControlDetailDescriptor>
                     </dxg:DetailDescriptorTrigger>
                 </dxg:DetailDescriptorSelector>
             </dxg:GridControl.DetailDescriptor>
 
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Width="3*" FieldName="Code" />
-                <dxg:GridColumn Width="3*" FieldName="Comment" />
-                <dxg:GridColumn Width="3*" FieldName="RecordingDate" />
+                <dxg:GridColumn Width="Auto" FieldName="Code" />
+                <dxg:GridColumn Width="Auto" FieldName="Comment" />
+                <dxg:GridColumn Width="Auto" FieldName="RecordingDate" />
             </dxg:GridControl.Columns>
-            <dxg:GridControl.View>
-                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="VisibleRows" />
-            </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>
 </UserControl>
