@@ -23,14 +23,14 @@
             ItemsSource="{Binding Exams}"
             SelectedItem="{Binding SelectedExam}">
             <dxg:GridControl.View>
-                <!--<dxg:TableView
-                    AutoWidth="True"
-                    BestFitModeOnSourceChange="VisibleRows"
-                    IsDetailButtonVisibleBinding="{DXBinding 'Row.Files.Count > 0'}" />-->
                 <dxg:TableView
                     AutoWidth="True"
                     BestFitModeOnSourceChange="VisibleRows"
-                    IsDetailButtonVisibleBinding="{Binding View.DataContext.SelectedLayout, Converter={StaticResource LayoutToBool}}" />
+                    IsDetailButtonVisibleBinding="{DXBinding 'Row.Files.Count > 0 and View.DataContext.IsExpandButtonVisible == true'}" />
+                <!--<dxg:TableView
+                    AutoWidth="True"
+                    BestFitModeOnSourceChange="VisibleRows"
+                    IsDetailButtonVisibleBinding="{Binding View.DataContext.SelectedLayout, Converter={StaticResource LayoutToBool}}" />-->
             </dxg:GridControl.View>
 
             <dxg:GridControl.DetailDescriptor>

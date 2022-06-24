@@ -41,6 +41,8 @@ namespace View.ViewModel
 
         public ObservableCollection<FileDto> Files { get; } = new ObservableCollection<FileDto>();
 
+        public bool IsExpandButtonVisible => _selectedLayout > 1;
+
         public IList<PatientDto> Patients
         {
             get
@@ -83,12 +85,12 @@ namespace View.ViewModel
         {
             _selectedLayout = selectedLayout;
             RaisePropertiesChanged("SelectedLayout");
-            Messenger.Default.Send<ChangeLayout>(new ChangeLayout(selectedLayout));
         }
 
         private void LoadExamForPatient(PatientDto patient)
         {
             Exams.Clear();
+            Files.Clear();
             _proxyExamViewModel.GetAll(patient.PatientId).ForEach(Exams.Add);
         }
 
