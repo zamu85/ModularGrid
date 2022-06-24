@@ -15,9 +15,9 @@
             EnableSmartColumnsGeneration="True"
             ItemsSource="{Binding Files}">
             <dxg:GridControl.Columns>
-                <dxg:GridColumn Width="3*" FieldName="ExamType" />
-                <dxg:GridColumn Width="3*" FieldName="Comment" />
-                <dxg:GridColumn Width="3*" FieldName="RecordingTime" />
+                <dxg:GridColumn FieldName="ExamType" />
+                <dxg:GridColumn FieldName="Comment" />
+                <dxg:GridColumn FieldName="RecordingTime" />
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
                 <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="VisibleRows" />

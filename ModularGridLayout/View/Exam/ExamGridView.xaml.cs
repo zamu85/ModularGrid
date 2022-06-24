@@ -11,7 +11,7 @@ namespace View.View.Exam
         public ExamGridView()
         {
             InitializeComponent();
-            this.DataContext = App.ExamVM;
+            this.DataContext = App.MainWindowVM;
         }
     }
 }

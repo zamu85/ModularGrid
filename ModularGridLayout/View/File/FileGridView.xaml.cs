@@ -11,7 +11,7 @@ namespace View.View.File
         public FileGridView()
         {
             InitializeComponent();
-            this.DataContext = App.FileVM;
+            this.DataContext = App.MainWindowVM;
         }
     }
 }

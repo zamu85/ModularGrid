@@ -1,28 +1,30 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using Commonality.Dto.File;
-using Commonality.Dto.Messages;
-using DevExpress.Mvvm;
-using DevExpress.Mvvm.Native;
 using Services.File;
 
 namespace View.ViewModel.File
 {
-    public class FileViewModel
+    public class FileViewModel : IProxyFileViewModel
     {
         private readonly FileService _fileService;
 
         public FileViewModel(FileService fileService)
         {
             _fileService = fileService;
-            Messenger.Default.Register<ExamMessage>(this, onExamSelected);
+            // Messenger.Default.Register<ExamMessage>(this, onExamSelected);
         }
 
-        public ObservableCollection<FileDto> Files { get; } = new ObservableCollection<FileDto>();
+        // public ObservableCollection<FileDto> Files { get; } = new ObservableCollection<FileDto>();
 
-        private void onExamSelected(ExamMessage message)
+        public IEnumerable<FileDto> GetAll(int examId)
         {
-            Files.Clear();
-            _fileService.GetFilesByExamId(message.ExamId).ForEach(Files.Add);
+            return _fileService.GetFilesByExamId(examId);
         }
+
+        //private void onExamSelected(ExamMessage message)
+        //{
+        //    Files.Clear();
+        //    _fileService.GetFilesByExamId(message.ExamId).ForEach(Files.Add);
+        //}
     }
 }

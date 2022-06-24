@@ -13,9 +13,6 @@ using Services.Exam;
 using Services.File;
 using Services.Patient;
 using View.ViewModel;
-using View.ViewModel.Exam;
-using View.ViewModel.File;
-using View.ViewModel.Patient;
 
 namespace ModularGridLayout
 {
@@ -47,36 +44,12 @@ namespace ModularGridLayout
             ServiceProvider = host.Services;
         }
 
-        public static ExamViewModel ExamVM
-        {
-            get
-            {
-                return ServiceProvider.GetRequiredService<ExamViewModel>();
-            }
-        }
-
-        public static FileViewModel FileVM
-        {
-            get
-            {
-                return ServiceProvider.GetRequiredService<FileViewModel>();
-            }
-        }
-
         public static MainWindowViewModel MainWindowVM
 
         {
             get
             {
                 return ServiceProvider.GetRequiredService<MainWindowViewModel>();
-            }
-        }
-
-        public static PatientViewModel PatientVM
-        {
-            get
-            {
-                return ServiceProvider.GetRequiredService<PatientViewModel>();
             }
         }
 
@@ -115,9 +88,6 @@ namespace ModularGridLayout
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             // Register all ViewModels.
-            services.AddSingleton<PatientViewModel>();
-            services.AddSingleton<ExamViewModel>();
-            services.AddSingleton<FileViewModel>();
             services.AddSingleton<MainWindowViewModel>();
 
             // Register all the Windows of the applications.

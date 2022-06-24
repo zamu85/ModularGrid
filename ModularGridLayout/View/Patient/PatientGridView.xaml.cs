@@ -11,7 +11,7 @@ namespace View.View.Patient
         public PatientGridView()
         {
             InitializeComponent();
-            this.DataContext = App.PatientVM;
+            this.DataContext = App.MainWindowVM;
         }
     }
 }
