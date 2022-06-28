@@ -14,18 +14,21 @@
         <DataTemplate x:Key="examFilesMasterDetailTemplate">
             <layout:ExamFilesMasterDetailView />
         </DataTemplate>
+        <DataTemplate x:Key="patientWithExamsMasterDetailTemplate">
+            <layout:PatientWithExamsMasterDetailView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
 
@@ -57,6 +60,9 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding SelectedLayout}" Value="2">
                             <Setter Property="ContentTemplate" Value="{StaticResource examFilesMasterDetailTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedLayout}" Value="3">
+                            <Setter Property="ContentTemplate" Value="{StaticResource patientWithExamsMasterDetailTemplate}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

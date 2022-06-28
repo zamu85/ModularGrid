@@ -91,7 +91,11 @@ namespace View.ViewModel
         {
             Exams.Clear();
             Files.Clear();
-            _proxyExamViewModel.GetAll(patient.PatientId).ForEach(Exams.Add);
+
+            if (_selectedLayout < 3)
+            {
+                _proxyExamViewModel.GetAll(patient.PatientId).ForEach(Exams.Add);
+            }
         }
 
         private void LoadFilesForExam(ExamDto value)

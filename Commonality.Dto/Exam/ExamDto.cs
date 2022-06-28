@@ -16,5 +16,8 @@ namespace Commonality.Dto.Exam
         public IList<FileDto> Files { get; set; }
 
         public DateTime RecordingDate { get; set; }
+
+        public int TotalFiles
+        { get { return Files.Count; } }
     }
 }

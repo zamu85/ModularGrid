@@ -13,11 +13,11 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <patient:PatientGridView Grid.Column="0" />
         <exam:ExamGridView Grid.Column="1" />

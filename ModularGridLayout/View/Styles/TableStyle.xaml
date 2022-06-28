@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid">
+    <Style x:Key="tableViewStyle" TargetType="{x:Type dxg:TableView}">
+        <Setter Property="AllowColumnFiltering" Value="True" />
+        <Setter Property="AllowEditing" Value="False" />
+        <Setter Property="AllowFilterEditor" Value="False" />
+        <Setter Property="ShowFilterPanelMode" Value="Never" />
+        <Setter Property="AllowGrouping" Value="False" />
+        <Setter Property="AllowMoveColumnToDropArea" Value="False" />
+        <Setter Property="AllowPerPixelScrolling" Value="False" />
+        <!--<Setter Property="FadeSelectionOnLostFocus" Value="False" />-->
+        <Setter Property="NavigationStyle" Value="Row" />
+        <Setter Property="ShowIndicator" Value="False" />
+        <Setter Property="ShowGroupPanel" Value="False" />
+        <Setter Property="ShowFilterPanelMode" Value="Never" />
+        <Setter Property="ShowFocusedRectangle" Value="True" />
+        <Setter Property="ShowSearchPanelMode" Value="Never" />
+        <Setter Property="BestFitMode" Value="AllRows" />
+        <!--<Setter Property="AutoWidth" Value="True" />-->
+        <Setter Property="ShowVerticalLines" Value="True" />
+        <Setter Property="ShowHorizontalLines" Value="True" />
+    </Style>
+
+    <Style x:Key="FocusedRowStyle" TargetType="dxg:RowControl">
+        <Style.Triggers>
+            <Trigger Property="dxg:DataViewBase.IsFocusedRow" Value="True">
+                <Setter Property="Background" Value="Gray" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

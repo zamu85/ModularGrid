@@ -15,12 +15,22 @@
             EnableSmartColumnsGeneration="True"
             ItemsSource="{Binding Files}">
             <dxg:GridControl.Columns>
-                <dxg:GridColumn FieldName="ExamType" />
-                <dxg:GridColumn FieldName="Comment" />
-                <dxg:GridColumn FieldName="RecordingTime" />
+                <dxg:GridColumn
+                    Width="Auto"
+                    AllowMoving="False"
+                    AllowResizing="False"
+                    AllowSorting="False"
+                    CellTemplate="{StaticResource colRecordingFileTypeCellTemplate}"
+                    FieldName="ExamType"
+                    FixedWidth="True"
+                    Header=" "
+                    ShowInColumnChooser="False" />
+                <dxg:GridColumn Width="Auto" FieldName="ExamType" />
+                <dxg:GridColumn Width="Auto" FieldName="Comment" />
+                <dxg:GridColumn Width="Auto" FieldName="RecordingTime" />
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
-                <dxg:TableView AutoWidth="True" BestFitModeOnSourceChange="VisibleRows" />
+                <dxg:TableView Style="{StaticResource tableViewStyle}" />
             </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>

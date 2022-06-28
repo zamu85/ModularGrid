@@ -37,7 +37,7 @@ namespace View.ViewModel.Patient
 
         public IEnumerable<PatientDto> GetAll()
         {
-            return _patientService.GetAllPatient();
+            return _patientService.GetAllPatientsWithExams();
         }
     }
 }

@@ -16,6 +16,9 @@
     <Compile Update="View\Layout\ExamFilesMasterDetailView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Layout\PatientWithExamsMasterDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Layout\ThreeColumns.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -33,6 +36,9 @@
     <Page Update="View\Layout\ExamFilesMasterDetailView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\Layout\PatientWithExamsMasterDetailView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\Layout\ThreeColumns.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -40,6 +46,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Patient\PatientGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Styles\TableStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Templates\ExamCellTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Templates\FileCellTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Templates\PatientCellTemplate.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

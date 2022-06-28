@@ -1,4 +1,5 @@
-﻿using Commonality.Dto.Patient;
+﻿using Commonality.Dto.Exam;
+using Commonality.Dto.Patient;
 using Model;
 
 namespace Services.Patient
@@ -48,6 +49,37 @@ namespace Services.Patient
                 LastName = x.LastName,
                 PatientId = x.PatientId,
             });
+        }
+
+        public IEnumerable<PatientDto> GetAllPatientsWithExams()
+        {
+            var result = _unitOfWork.PatientRepository.GetAllPatientsWithExams();
+
+            if (result != null)
+            {
+                return result.Select(x => new PatientDto()
+                {
+                    BirthDate = x.BirthDate,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    PatientId = x.PatientId,
+                    Exams = x.Exams.Select(e => new ExamDto()
+                    {
+                        Code = e.Code,
+                        Comment = e.Comment,
+                        ExamId = e.ExamId,
+                        RecordingDate = e.RecordingDate,
+                        Files = e.Files.Select(f => new Commonality.Dto.File.FileDto()
+                        {
+                            Comment = f.Comment,
+                            ExamType = f.ExamType,
+                            RecordingTime = f.RecordingTime
+                        }).ToList(),
+                    }).ToList()
+                });
+            }
+
+            return null;
         }
     }
 }
