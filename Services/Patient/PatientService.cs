@@ -40,6 +40,19 @@ namespace Services.Patient
             _unitOfWork.Save();
         }
 
+        public PatientDto Get(int patientId)
+        {
+            var patient = _unitOfWork.PatientRepository.GetById(patientId);
+
+            return new PatientDto()
+            {
+                BirthDate = patient.BirthDate,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+                PatientId = patient.PatientId,
+            };
+        }
+
         public IEnumerable<PatientDto> GetAllPatient()
         {
             return _unitOfWork.PatientRepository.GetAll().Select(x => new PatientDto()
@@ -80,6 +93,18 @@ namespace Services.Patient
             }
 
             return null;
+        }
+
+        public IEnumerable<PatientNameDto> QuickSearchPatient(string text)
+        {
+            return _unitOfWork.PatientRepository.QuickSearch(text)
+                .Select(p => new PatientNameDto()
+                {
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    NameToShow = $"{p.LastName} {p.FirstName}",
+                    PatientId = p.PatientId
+                });
         }
     }
 }

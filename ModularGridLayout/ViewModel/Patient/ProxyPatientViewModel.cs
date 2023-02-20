@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Commonality.Dto.Patient;
+﻿using Commonality.Dto.Patient;
 using Services.Patient;
+using System.Collections.Generic;
 
 namespace View.ViewModel.Patient
 {
@@ -17,6 +17,11 @@ namespace View.ViewModel.Patient
             _patientViewModel = new PatientViewModel(patientService);
         }
 
+        public PatientDto Get(int patientId)
+        {
+            return _patientService.Get(patientId);
+        }
+
         public IEnumerable<PatientDto> GetAll()
         {
             if (_allPatient != null)
@@ -26,6 +31,11 @@ namespace View.ViewModel.Patient
 
             _allPatient = _patientViewModel.GetAll();
             return _allPatient;
+        }
+
+        public IEnumerable<PatientNameDto> QuickSearchPatients(string text)
+        {
+            return _patientViewModel.QuickSearchPatients(text);
         }
     }
 }

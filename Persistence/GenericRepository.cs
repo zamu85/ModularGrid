@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using Model;
+﻿using Model;
+using System.Linq.Expressions;
 
 namespace Persistence
 {

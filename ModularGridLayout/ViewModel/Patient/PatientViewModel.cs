@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Commonality.Dto.Patient;
+﻿using Commonality.Dto.Patient;
 using Services.Patient;
+using System;
+using System.Collections.Generic;
 
 namespace View.ViewModel.Patient
 {
@@ -22,6 +23,26 @@ namespace View.ViewModel.Patient
             // Patients = _patientService.GetAllPatient().ToList();
         }
 
+        public void Get(int patientId)
+        {
+            throw new NotImplementedException();
+        }
+
+        PatientDto IProxyPatientViewModel.Get(int patientId)
+        {
+            return _patientService.Get(patientId);
+        }
+
+        public IEnumerable<PatientDto> GetAll()
+        {
+            return _patientService.GetAllPatientsWithExams();
+        }
+
+        public IEnumerable<PatientNameDto> QuickSearchPatients(string text)
+        {
+            return _patientService.QuickSearchPatient(text);
+        }
+
         //private PatientDto _selectedPatient;
         //public IList<PatientDto> Patients { get; }
 
@@ -34,10 +55,5 @@ namespace View.ViewModel.Patient
         //        Messenger.Default.Send<PatientMessage>(new PatientMessage(_selectedPatient.PatientId));
         //    }
         //}
-
-        public IEnumerable<PatientDto> GetAll()
-        {
-            return _patientService.GetAllPatientsWithExams();
-        }
     }
 }

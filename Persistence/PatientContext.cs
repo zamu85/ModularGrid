@@ -16,5 +16,13 @@ namespace Persistence
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Model.Patient.Patient>(e =>
+            {
+                e.Property(e => e.BirthDate).HasColumnType("datetime");
+            });
+        }
     }
 }

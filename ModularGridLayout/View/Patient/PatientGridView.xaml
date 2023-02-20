@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
@@ -18,6 +19,7 @@
         <ResourceDictionary />
     </UserControl.Resources>
     <Grid>
+
         <!--  PATIENTS DETAILS  -->
         <dxg:GridControl
             Name="patientsGrid"
@@ -102,7 +104,7 @@
 
             <dxg:GridControl.View>
                 <dxg:TableView
-                    AlternateRowBackground="LightBlue"
+                    AlternateRowBackground="LightGray"
                     AlternationCount="2"
                     DetailHeaderContent="Ccccc"
                     IsDetailButtonVisibleBinding="{DXBinding 'Row.Exams.Count > 0 and View.DataContext.SelectedLayout == 3'}"

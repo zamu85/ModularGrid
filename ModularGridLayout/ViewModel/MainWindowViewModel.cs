@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Commonality.Dto.Exam;
+﻿using Commonality.Dto.Exam;
 using Commonality.Dto.File;
 using Commonality.Dto.Messages;
 using Commonality.Dto.Patient;
 using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.Native;
+using DevExpress.Xpf.Editors;
 using Services.Exam;
 using Services.File;
 using Services.Patient;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using View.ViewModel.Exam;
 using View.ViewModel.File;
 using View.ViewModel.Patient;
@@ -19,8 +21,10 @@ namespace View.ViewModel
     public class MainWindowViewModel : ViewModelBase
     {
         private IProxyPatientViewModel _patientModel;
+        private IList<PatientDto> _patients;
         private IProxyExamViewModel _proxyExamViewModel;
         private IProxyFileViewModel _proxyFileViewModel;
+        private IList<PatientNameDto> _quickSearchPatients;
         private ExamDto _selectedExam;
         private int _selectedLayout = 1;
         private PatientDto _selectedPatient;
@@ -33,6 +37,8 @@ namespace View.ViewModel
             _patientModel = new ProxyPatientViewModel(patientService);
             _proxyExamViewModel = new ProxyExamViewModel(examService);
             _proxyFileViewModel = new ProxyFileViewModel(fileService);
+
+            LoadPatients();
         }
 
         public DelegateCommand<int> ChangeLayoutCommand { get; set; }
@@ -43,13 +49,9 @@ namespace View.ViewModel
 
         public bool IsExpandButtonVisible => _selectedLayout > 1;
 
-        public IList<PatientDto> Patients
-        {
-            get
-            {
-                return _patientModel.GetAll().ToList();
-            }
-        }
+        public ObservableCollection<PatientDto> Patients { get; } = new ObservableCollection<PatientDto>();
+
+        public ObservableCollection<PatientNameDto> QuickSearchPatients { get; } = new();
 
         public ExamDto SelectedExam
         {
@@ -87,6 +89,49 @@ namespace View.ViewModel
             RaisePropertiesChanged("SelectedLayout");
         }
 
+        [Command]
+        public void ChosenPatient(AutoSuggestEditSuggestionChosenEventArgs parameter)
+        {
+            var patient = _patientModel.Get(((PatientNameDto)parameter.SelectedItem).PatientId);
+            Patients.Clear();
+            Patients.Add(patient);
+        }
+
+        [Command]
+        public void QueryPatients(AutoSuggestEditQuerySubmittedEventArgs parameter)
+        {
+            if (string.IsNullOrEmpty(parameter.Text))
+            {
+                ResetQuickSearch();
+                return;
+            }
+
+            if (parameter.Text.Length < 3)
+            {
+                return;
+            }
+
+            QuickSearchPatients.Clear();
+            _quickSearchPatients = _patientModel.QuickSearchPatients(parameter.Text).ToList();
+            _quickSearchPatients.ForEach(QuickSearchPatients.Add);
+        }
+
+        [Command]
+        public void ResetQuickSearch()
+        {
+            if (_quickSearchPatients is null)
+            {
+                return;
+            }
+
+            QuickSearchPatients.Clear();
+            _quickSearchPatients.Clear();
+
+            Patients.Clear();
+            LoadPatients();
+            return;
+        }
+
         private void LoadExamForPatient(PatientDto patient)
         {
             Exams.Clear();
@@ -102,6 +147,12 @@ namespace View.ViewModel
         {
             Files.Clear();
             _proxyFileViewModel.GetAll(value.ExamId).ForEach(Files.Add);
+        }
+
+        private void LoadPatients()
+        {
+            _patients = _patientModel.GetAll().ToList();
+            _patients.ForEach(Patients.Add);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Model.Patient;
+using System.Text.RegularExpressions;
 
 namespace Persistence.Patient
 {
@@ -14,6 +15,22 @@ namespace Persistence.Patient
             return context.Patient
                 .Include(e => e.Exams)
                 .ThenInclude(f => f.Files);
+        }
+
+        public IEnumerable<Model.Patient.Patient> QuickSearch(string text)
+        {
+            return context.Patient
+                .Select(p => new
+                {
+                    FullName = p.LastName + " " + p.FirstName,
+                    FullNameReverse = p.FirstName + " " + p.LastName,
+                    Patient = p
+                }).AsEnumerable().Where(p =>
+                    Regex.IsMatch(p.Patient.LastName, Regex.Escape(text), RegexOptions.IgnoreCase)
+                    || Regex.IsMatch(p.Patient.FirstName, Regex.Escape(text), RegexOptions.IgnoreCase)
+                    || Regex.IsMatch(p.FullNameReverse, Regex.Escape(text), RegexOptions.IgnoreCase)
+                    || Regex.IsMatch(p.FullName, Regex.Escape(text), RegexOptions.IgnoreCase))
+                .Select(p => new Model.Patient.Patient(p.Patient));
         }
     }
 }

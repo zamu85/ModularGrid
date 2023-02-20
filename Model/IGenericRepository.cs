@@ -1,7 +1,7 @@
-﻿namespace Model
-{
-    using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
+namespace Model
+{
     public interface IGenericRepository<T> where T : class
     {
         void Add(T entity);

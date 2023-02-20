@@ -28,6 +28,14 @@ namespace Model.Patient
             LastName = lastName;
         }
 
+        public Patient(Patient other)
+        {
+            this.BirthDate = other.BirthDate;
+            this.FirstName = other.FirstName;
+            this.LastName = other.LastName;
+            this.PatientId = other.PatientId;
+        }
+
         public DateTime BirthDate { get; set; }
         public ICollection<Model.Exam.Exam> Exams { get; } = new List<Model.Exam.Exam>();
         public string FirstName { get; set; }
