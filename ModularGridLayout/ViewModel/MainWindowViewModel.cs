@@ -77,7 +77,10 @@ namespace View.ViewModel
             set
             {
                 _selectedPatient = value;
-                LoadExamForPatient(value);
+                if (value is not null)
+                {
+                    LoadExamForPatient(value);
+                }
             }
         }
 
