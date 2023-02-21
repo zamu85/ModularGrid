@@ -1,6 +1,7 @@
 ﻿using Commonality.Dto.Patient;
 using Services.Patient;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace View.ViewModel.Patient
 {
@@ -33,9 +34,9 @@ namespace View.ViewModel.Patient
             return _allPatient;
         }
 
-        public IEnumerable<PatientNameDto> QuickSearchPatients(string text)
+        public async Task<IEnumerable<PatientNameDto>> QuickSearchPatients(string text)
         {
-            return _patientViewModel.QuickSearchPatients(text);
+            return await _patientViewModel.QuickSearchPatients(text);
         }
     }
 }

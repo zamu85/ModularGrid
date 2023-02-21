@@ -1,5 +1,6 @@
 ﻿using Commonality.Dto.Patient;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace View.ViewModel.Patient
 {
@@ -9,6 +10,6 @@ namespace View.ViewModel.Patient
 
         IEnumerable<PatientDto> GetAll();
 
-        IEnumerable<PatientNameDto> QuickSearchPatients(string text);
+        Task<IEnumerable<PatientNameDto>> QuickSearchPatients(string text);
     }
 }

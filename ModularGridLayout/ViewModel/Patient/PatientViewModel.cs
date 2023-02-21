@@ -2,6 +2,7 @@
 using Services.Patient;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace View.ViewModel.Patient
 {
@@ -38,22 +39,9 @@ namespace View.ViewModel.Patient
             return _patientService.GetAllPatientsWithExams();
         }
 
-        public IEnumerable<PatientNameDto> QuickSearchPatients(string text)
+        public async Task<IEnumerable<PatientNameDto>> QuickSearchPatients(string text)
         {
-            return _patientService.QuickSearchPatient(text);
+            return await _patientService.QuickSearchPatient(text);
         }
-
-        //private PatientDto _selectedPatient;
-        //public IList<PatientDto> Patients { get; }
-
-        //public PatientDto SelectedPatient
-        //{
-        //    get { return _selectedPatient; }
-        //    set
-        //    {
-        //        _selectedPatient = value;
-        //        Messenger.Default.Send<PatientMessage>(new PatientMessage(_selectedPatient.PatientId));
-        //    }
-        //}
     }
 }

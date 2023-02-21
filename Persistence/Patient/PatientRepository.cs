@@ -17,9 +17,11 @@ namespace Persistence.Patient
                 .ThenInclude(f => f.Files);
         }
 
-        public IEnumerable<Model.Patient.Patient> QuickSearch(string text)
+        public async Task<IEnumerable<Model.Patient.Patient>> QuickSearch(string text)
         {
-            return context.Patient
+            return await Task.Run(() =>
+            {
+                return context.Patient
                 .Select(p => new
                 {
                     FullName = p.LastName + " " + p.FirstName,
@@ -30,7 +32,9 @@ namespace Persistence.Patient
                     || Regex.IsMatch(p.Patient.FirstName, Regex.Escape(text), RegexOptions.IgnoreCase)
                     || Regex.IsMatch(p.FullNameReverse, Regex.Escape(text), RegexOptions.IgnoreCase)
                     || Regex.IsMatch(p.FullName, Regex.Escape(text), RegexOptions.IgnoreCase))
+                .Take(50)
                 .Select(p => new Model.Patient.Patient(p.Patient));
+            });
         }
     }
 }

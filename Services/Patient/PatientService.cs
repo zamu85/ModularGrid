@@ -95,9 +95,10 @@ namespace Services.Patient
             return null;
         }
 
-        public IEnumerable<PatientNameDto> QuickSearchPatient(string text)
+        public async Task<IEnumerable<PatientNameDto>> QuickSearchPatient(string text)
         {
-            return _unitOfWork.PatientRepository.QuickSearch(text)
+            var quickSearchedPatients = await _unitOfWork.PatientRepository.QuickSearch(text);
+            return quickSearchedPatients
                 .Select(p => new PatientNameDto()
                 {
                     FirstName = p.FirstName,

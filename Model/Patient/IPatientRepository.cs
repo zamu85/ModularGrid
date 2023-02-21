@@ -4,6 +4,6 @@
     {
         IEnumerable<Patient> GetAllPatientsWithExams();
 
-        IEnumerable<Patient> QuickSearch(string text);
+        Task<IEnumerable<Patient>> QuickSearch(string text);
     }
 }

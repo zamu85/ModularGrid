@@ -101,7 +101,7 @@ namespace View.ViewModel
         }
 
         [Command]
-        public void QueryPatients(AutoSuggestEditQuerySubmittedEventArgs parameter)
+        public async void QueryPatients(AutoSuggestEditQuerySubmittedEventArgs parameter)
         {
             if (string.IsNullOrEmpty(parameter.Text))
             {
@@ -115,8 +115,9 @@ namespace View.ViewModel
             }
 
             QuickSearchPatients.Clear();
-            _quickSearchPatients = _patientModel.QuickSearchPatients(parameter.Text).ToList();
-            _quickSearchPatients.ForEach(QuickSearchPatients.Add);
+            var quickSearchPatients = await _patientModel.QuickSearchPatients(parameter.Text);
+            _quickSearchPatients = quickSearchPatients.ToList();
+            quickSearchPatients.ForEach(QuickSearchPatients.Add);
         }
 
         [Command]
