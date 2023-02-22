@@ -1,23 +1,26 @@
-﻿namespace Persistence.UnitOfWork
-{
-    using Model;
-    using Model.Exam;
-    using Model.File;
-    using Model.Patient;
-    using Persistence.Exam;
-    using Persistence.File;
-    using Persistence.Patient;
+﻿using Microsoft.EntityFrameworkCore;
+using Model;
+using Model.Exam;
+using Model.File;
+using Model.Patient;
+using Persistence.Exam;
+using Persistence.File;
+using Persistence.Patient;
 
+namespace Persistence.UnitOfWork
+{
     public class UnitOfWork : IUnitOfWork
     {
-        private PatientContext context;
+        private readonly IDbContextFactory<PatientContext> _contextFactory;
+        private PatientContext _context;
 
-        public UnitOfWork(PatientContext context)
+        public UnitOfWork(IDbContextFactory<PatientContext> contextFactory)
         {
-            this.context = context;
-            PatientRepository = new PatientRepository(context);
-            ExamRepository = new ExamRepository(context);
-            FileRepository = new FileRepository(context);
+            _context = contextFactory.CreateDbContext();
+            _contextFactory = contextFactory;
+            PatientRepository = new PatientRepository(_context);
+            ExamRepository = new ExamRepository(_context);
+            FileRepository = new FileRepository(_context);
         }
 
         public IExamRepository ExamRepository { get; private set; }
@@ -26,12 +29,12 @@
 
         public void Dispose()
         {
-            context.Dispose();
+            _context?.Dispose();
         }
 
         public int Save()
         {
-            return context.SaveChanges();
+            return _context.SaveChanges();
         }
     }
 }

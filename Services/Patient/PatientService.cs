@@ -95,17 +95,15 @@ namespace Services.Patient
             return null;
         }
 
+        public async Task<IQueryable<PatientNameDto>> QuickSearch()
+        {
+            return await _unitOfWork.PatientRepository.QuickSearch();
+        }
+
         public async Task<IEnumerable<PatientNameDto>> QuickSearchPatient(string text)
         {
             var quickSearchedPatients = await _unitOfWork.PatientRepository.QuickSearch(text);
-            return quickSearchedPatients
-                .Select(p => new PatientNameDto()
-                {
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    NameToShow = $"{p.LastName} {p.FirstName}",
-                    PatientId = p.PatientId
-                });
+            return quickSearchedPatients;
         }
     }
 }

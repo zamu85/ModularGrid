@@ -20,6 +20,27 @@
         <DataTemplate x:Key="patientWithExamsMasterDetailTemplate">
             <layout:PatientWithExamsMasterDetailView />
         </DataTemplate>
+        <Style x:Key="tableViewStyle" TargetType="{x:Type dxg:TableView}">
+            <Setter Property="AllowColumnFiltering" Value="True" />
+            <Setter Property="AllowEditing" Value="False" />
+            <Setter Property="AllowFilterEditor" Value="False" />
+            <Setter Property="ShowFilterPanelMode" Value="Never" />
+            <Setter Property="AllowGrouping" Value="False" />
+            <Setter Property="AllowMoveColumnToDropArea" Value="False" />
+            <Setter Property="AllowPerPixelScrolling" Value="False" />
+            <Setter Property="NavigationStyle" Value="Row" />
+            <Setter Property="ShowIndicator" Value="False" />
+            <Setter Property="ShowGroupPanel" Value="False" />
+            <Setter Property="ShowFilterPanelMode" Value="Never" />
+            <Setter Property="ShowFocusedRectangle" Value="True" />
+            <Setter Property="ShowSearchPanelMode" Value="Never" />
+            <Setter Property="BestFitMode" Value="AllRows" />
+            <Setter Property="ShowVerticalLines" Value="True" />
+            <Setter Property="ShowHorizontalLines" Value="True" />
+            <Setter Property="UseEvenRowBackground" Value="True" />
+            <Setter Property="AlternationCount" Value="2" />
+            <Setter Property="FadeSelectionOnLostFocus" Value="False" />
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -63,16 +84,10 @@
             <dxe:AutoSuggestEdit
                 x:Name="patients"
                 AllowDefaultButton="False"
-                AllowPopupTextHighlighting="True"
-                DisplayMember="NameToShow"
                 ImmediatePopup="True"
                 ItemsSource="{Binding QuickSearchPatients}"
                 NullText="Search by patient name"
-                NullValueButtonPlacement="None"
-                PopupHighlightedTextCriteria="Regex"
-                SelectAllOnGotFocus="True"
-                SelectAllOnMouseUp="True"
-                TextMember="NameToShow">
+                TextMember="FullName">
                 <dxe:AutoSuggestEdit.BorderTemplate>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
                         <Border
@@ -83,6 +98,28 @@
                         </Border>
                     </ControlTemplate>
                 </dxe:AutoSuggestEdit.BorderTemplate>
+                <dxe:AutoSuggestEdit.PopupContentTemplate>
+                    <ControlTemplate>
+                        <dxg:GridControl Name="PART_Content">
+                            <dxg:GridColumn
+                                Width="5*"
+                                FieldName="LastName"
+                                Header="Last name" />
+                            <dxg:GridColumn
+                                Width="1.5*"
+                                FieldName="FirstName"
+                                Header="First Name" />
+                            <dxg:GridColumn
+                                Width="3*"
+                                FieldName="BirthDate"
+                                Header="Birth date" />
+
+                            <dxg:GridControl.View>
+                                <dxg:TableView x:Name="tableView" Style="{StaticResource tableViewStyle}" />
+                            </dxg:GridControl.View>
+                        </dxg:GridControl>
+                    </ControlTemplate>
+                </dxe:AutoSuggestEdit.PopupContentTemplate>
                 <!--<dxe:AutoSuggestEdit.Resources>
                     <Style TargetType="dxe:ButtonInfo">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -100,8 +137,8 @@
                 </dxmvvm:Interaction.Behaviors>
                 <dxe:AutoSuggestEdit.Buttons>
                     <dxe:ButtonInfo
-                        Command="{Binding ResetQuickSearchCommand}"
                         Click="ButtonInfo_Click"
+                        Command="{Binding ResetQuickSearchCommand}"
                         GlyphKind="Cancel"
                         Visibility="{DXBinding '@e(patients).ItemsSource.Count &gt; 0',
                                                Converter={dxmvvm:NumericToVisibilityConverter}}" />

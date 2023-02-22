@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using Commonality.Dto;
+﻿using Commonality.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +10,9 @@ using Persistence.UnitOfWork;
 using Services.Exam;
 using Services.File;
 using Services.Patient;
+using System;
+using System.Windows;
+using View.View.Test;
 using View.ViewModel;
 
 namespace ModularGridLayout
@@ -67,7 +68,7 @@ namespace ModularGridLayout
         {
             await host.StartAsync();
 
-            var window = ServiceProvider.GetRequiredService<MainWindow>();
+            var window = ServiceProvider.GetRequiredService<TestAutoSuggest>();
             window.Show();
 
             //base.OnStartup(e);
@@ -80,9 +81,13 @@ namespace ModularGridLayout
             services.AddScoped<ExamService>();
             services.AddScoped<FileService>();
 
-            services.AddDbContext<PatientContext>(options =>
+            services.AddDbContextFactory<PatientContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+                //options.UseSqlite(configuration.GetConnectionString("DefaultConnection"),
+                //    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+
+                options.UseSqlServer(configuration.GetConnectionString("SQLServerConnection"),
+                    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -92,6 +97,7 @@ namespace ModularGridLayout
 
             // Register all the Windows of the applications.
             services.AddTransient<MainWindow>();
+            services.AddTransient<TestAutoSuggest>();
         }
     }
 }

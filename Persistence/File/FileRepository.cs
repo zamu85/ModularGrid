@@ -4,7 +4,7 @@ namespace Persistence.File
 {
     public class FileRepository : GenericRepository<Model.File.File>, IFileRepository
     {
-        public FileRepository(PatientContext context) : base(context)
+        public FileRepository(PatientContext contextFactory) : base(contextFactory)
         {
         }
     }

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Commonality.Dto.Patient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
     public class PatientContext : DbContext
     {
-        public PatientContext(DbContextOptions options) : base(options)
+        public PatientContext(DbContextOptions<PatientContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -12,6 +13,8 @@ namespace Persistence
         public DbSet<Model.Exam.Exam> Exam { get; set; }
         public DbSet<Model.File.File> Files { get; set; }
         public DbSet<Model.Patient.Patient> Patient { get; set; }
+
+        public DbSet<PatientNameDto> QuickSearch { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -23,6 +26,11 @@ namespace Persistence
             {
                 e.Property(e => e.BirthDate).HasColumnType("datetime");
             });
+
+            modelBuilder
+                .Entity<PatientNameDto>()
+                .ToView(nameof(QuickSearch))
+                .HasKey(t => t.PatientId);
         }
     }
 }

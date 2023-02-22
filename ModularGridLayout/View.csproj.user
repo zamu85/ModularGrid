@@ -25,6 +25,9 @@
     <Compile Update="View\Patient\PatientGridView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Test\TestAutoSuggest.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\Exam\ExamGridView.xaml">
@@ -58,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\Templates\PatientCellTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Test\TestAutoSuggest.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

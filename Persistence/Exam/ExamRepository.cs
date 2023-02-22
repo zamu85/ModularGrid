@@ -11,7 +11,7 @@ namespace Persistence.Exam
 
         public IEnumerable<Model.Exam.Exam> GetPatientExamWithFiles(int patientId)
         {
-            return context.Exam.Where(e => e.PatientId == patientId)
+            return _context.Exam.Where(e => e.PatientId == patientId)
                 .Include(f => f.Files);
         }
     }
