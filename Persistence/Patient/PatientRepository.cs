@@ -8,15 +8,18 @@ namespace Persistence.Patient
 {
     public class PatientRepository : GenericRepository<Model.Patient.Patient>, IPatientRepository
     {
-        public PatientRepository(PatientContext context) : base(context)
+        public PatientRepository(IDbContextFactory<PatientContext> context) : base(context)
         {
         }
 
         public IEnumerable<Model.Patient.Patient> GetAllPatientsWithExams()
         {
-            return _context.Patient
-                .Include(e => e.Exams)
-                .ThenInclude(f => f.Files);
+            using (var context = _context.CreateDbContext())
+            {
+                return context.Patient
+                    .Include(e => e.Exams)
+                    .ThenInclude(f => f.Files);
+            }
         }
 
         public async Task<IEnumerable<PatientNameDto>> QuickSearch(string text)
@@ -39,8 +42,9 @@ namespace Persistence.Patient
                 //.Select(p => new Model.Patient.Patient(p.Patient));
 
                 //return query;
+                using var context = _context.CreateDbContext();
                 stopWatch.Start();
-                var q = _context.QuickSearch.AsEnumerable().Where(p =>
+                var q = context.QuickSearch.AsEnumerable().Where(p =>
                     //Regex.IsMatch(p.LastName, Regex.Escape(text), RegexOptions.IgnoreCase)
                     //|| Regex.IsMatch(p.FirstName, Regex.Escape(text), RegexOptions.IgnoreCase)
                     Regex.IsMatch(p.ReverseName, Regex.Escape(text), RegexOptions.IgnoreCase)
@@ -64,7 +68,13 @@ namespace Persistence.Patient
 
         public async Task<IQueryable<PatientNameDto>> QuickSearch()
         {
-            return await Task.Delay(100).ContinueWith(t => _context.QuickSearch);
+            return await Task.Delay(100).ContinueWith(t =>
+            {
+                using (var context = _context.CreateDbContext())
+                {
+                    return context.QuickSearch;
+                }
+            });
         }
     }
 }

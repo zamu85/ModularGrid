@@ -12,15 +12,13 @@ namespace Persistence.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly IDbContextFactory<PatientContext> _contextFactory;
-        private PatientContext _context;
 
         public UnitOfWork(IDbContextFactory<PatientContext> contextFactory)
         {
-            _context = contextFactory.CreateDbContext();
             _contextFactory = contextFactory;
-            PatientRepository = new PatientRepository(_context);
-            ExamRepository = new ExamRepository(_context);
-            FileRepository = new FileRepository(_context);
+            PatientRepository = new PatientRepository(_contextFactory);
+            ExamRepository = new ExamRepository(_contextFactory);
+            FileRepository = new FileRepository(_contextFactory);
         }
 
         public IExamRepository ExamRepository { get; private set; }
@@ -29,12 +27,12 @@ namespace Persistence.UnitOfWork
 
         public void Dispose()
         {
-            _context?.Dispose();
         }
 
         public int Save()
         {
-            return _context.SaveChanges();
+            using var context = _contextFactory.CreateDbContext();
+            return context.SaveChanges();
         }
     }
 }

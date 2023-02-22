@@ -90,7 +90,7 @@ namespace ModularGridLayout
                     o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
             });
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Register all ViewModels.
             services.AddSingleton<MainWindowViewModel>();

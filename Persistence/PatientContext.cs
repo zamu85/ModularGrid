@@ -16,6 +16,11 @@ namespace Persistence
 
         public DbSet<PatientNameDto> QuickSearch { get; set; }
 
+        public override void Dispose()
+        {
+            //base.Dispose();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
