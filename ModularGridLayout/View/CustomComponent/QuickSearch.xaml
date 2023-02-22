@@ -1,0 +1,108 @@
+﻿<UserControl
+    x:Class="View.View.CustomComponent.QuickSearch"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:types="clr-namespace:Commonality.Dto.Patient;assembly=Commonality.Dto"
+    xmlns:valueConverter="clr-namespace:View.ValueConverters"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="tableViewStyle" TargetType="{x:Type dxg:TableView}">
+            <Setter Property="AllowColumnFiltering" Value="True" />
+            <Setter Property="AllowEditing" Value="False" />
+            <Setter Property="AllowFilterEditor" Value="False" />
+            <Setter Property="ShowFilterPanelMode" Value="Never" />
+            <Setter Property="AllowGrouping" Value="False" />
+            <Setter Property="AllowMoveColumnToDropArea" Value="False" />
+            <Setter Property="AllowPerPixelScrolling" Value="False" />
+            <Setter Property="NavigationStyle" Value="Row" />
+            <Setter Property="ShowIndicator" Value="False" />
+            <Setter Property="ShowGroupPanel" Value="False" />
+            <Setter Property="ShowFilterPanelMode" Value="Never" />
+            <Setter Property="ShowFocusedRectangle" Value="True" />
+            <Setter Property="ShowSearchPanelMode" Value="Never" />
+            <Setter Property="BestFitMode" Value="AllRows" />
+            <Setter Property="ShowVerticalLines" Value="True" />
+            <Setter Property="ShowHorizontalLines" Value="True" />
+            <Setter Property="UseEvenRowBackground" Value="True" />
+            <Setter Property="AlternationCount" Value="2" />
+            <Setter Property="FadeSelectionOnLostFocus" Value="False" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Label Content="Search by patient name" />
+        <dxe:AutoSuggestEdit
+            x:Name="patients"
+            AllowDefaultButton="False"
+            ImmediatePopup="True"
+            NullText="Search by patient name"
+            TextMember="FullName">
+            <dxe:AutoSuggestEdit.ItemsSource>
+                <dx:InfiniteAsyncSource ElementType="{x:Type types:PatientNameDto}" FetchRowsCommand="{Binding FetchRowsCommand}" />
+            </dxe:AutoSuggestEdit.ItemsSource>
+            <dxe:AutoSuggestEdit.BorderTemplate>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Border
+                        Background="AntiqueWhite"
+                        BorderThickness="0,0,0,5"
+                        CornerRadius="2">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </dxe:AutoSuggestEdit.BorderTemplate>
+            <dxe:AutoSuggestEdit.PopupContentTemplate>
+                <ControlTemplate>
+                    <dxg:GridControl Name="PART_Content">
+                        <dxg:GridColumn
+                            Width="1.5*"
+                            FieldName="LastName"
+                            Header="Last name" />
+                        <dxg:GridColumn
+                            Width="1.5*"
+                            FieldName="FirstName"
+                            Header="First name" />
+                        <dxg:GridColumn
+                            Width="1.5*"
+                            FieldName="BirthDate"
+                            Header="Birth name" />
+                        <dxg:GridControl.View>
+                            <dxg:TableView x:Name="tableView" Style="{StaticResource tableViewStyle}" />
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </ControlTemplate>
+            </dxe:AutoSuggestEdit.PopupContentTemplate>
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand
+                    Command="{Binding QuerySubmittedCommand}"
+                    EventName="QuerySubmitted"
+                    PassEventArgsToCommand="True"
+                    SourceObject="{Binding ElementName=patients}">
+                    <dxmvvm:EventToCommand.EventArgsConverter>
+                        <valueConverter:QuerySubmittedArgsConverter />
+                    </dxmvvm:EventToCommand.EventArgsConverter>
+                </dxmvvm:EventToCommand>
+                <dxmvvm:EventToCommand
+                    Command="{Binding ChosenPatientCommand}"
+                    EventName="SuggestionChosen"
+                    PassEventArgsToCommand="True" />
+            </dxmvvm:Interaction.Behaviors>
+            <dxe:AutoSuggestEdit.Buttons>
+                <dxe:ButtonInfo
+                    Click="ButtonInfo_Click"
+                    Command="{Binding ResetQuickSearchCommand}"
+                    GlyphKind="Cancel"
+                    Visibility="{Binding IsCloseButtonVisible, Converter={dxmvvm:NumericToVisibilityConverter}}" />
+                <dxe:ButtonInfo
+                    GlyphKind="DropDown"
+                    IsDefaultButton="True"
+                    Visibility="Collapsed" />
+            </dxe:AutoSuggestEdit.Buttons>
+        </dxe:AutoSuggestEdit>
+    </StackPanel>
+</UserControl>

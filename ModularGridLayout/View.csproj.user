@@ -25,7 +25,7 @@
     <Compile Update="View\Patient\PatientGridView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Test\TestAutoSuggest.xaml.cs">
+    <Compile Update="View\CustomComponent\QuickSearch.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -63,7 +63,7 @@
     <Page Update="View\Templates\PatientCellTemplate.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Test\TestAutoSuggest.xaml">
+    <Page Update="View\CustomComponent\QuickSearch.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

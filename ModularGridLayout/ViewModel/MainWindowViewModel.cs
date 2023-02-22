@@ -3,15 +3,14 @@ using Commonality.Dto.File;
 using Commonality.Dto.Messages;
 using Commonality.Dto.Patient;
 using DevExpress.Mvvm;
-using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.Native;
-using DevExpress.Xpf.Editors;
 using Services.Exam;
 using Services.File;
 using Services.Patient;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using View.ViewModel.CustomComponent;
 using View.ViewModel.Exam;
 using View.ViewModel.File;
 using View.ViewModel.Patient;
@@ -38,6 +37,8 @@ namespace View.ViewModel
             _proxyExamViewModel = new ProxyExamViewModel(examService);
             _proxyFileViewModel = new ProxyFileViewModel(fileService);
 
+            QuickSearchViewModel = new QuickSearchViewModel(patientService);
+
             LoadPatients();
         }
 
@@ -51,7 +52,7 @@ namespace View.ViewModel
 
         public ObservableCollection<PatientDto> Patients { get; } = new ObservableCollection<PatientDto>();
 
-        public ObservableCollection<PatientNameDto> QuickSearchPatients { get; } = new();
+        public QuickSearchViewModel QuickSearchViewModel { get; }
 
         public ExamDto SelectedExam
         {
@@ -90,50 +91,6 @@ namespace View.ViewModel
         {
             _selectedLayout = selectedLayout;
             RaisePropertiesChanged("SelectedLayout");
-        }
-
-        [Command]
-        public void ChosenPatient(AutoSuggestEditSuggestionChosenEventArgs parameter)
-        {
-            var patient = _patientModel.Get(((PatientNameDto)parameter.SelectedItem).PatientId);
-            Patients.Clear();
-            Patients.Add(patient);
-        }
-
-        [Command]
-        public async void QueryPatients(AutoSuggestEditQuerySubmittedEventArgs parameter)
-        {
-            if (string.IsNullOrEmpty(parameter.Text))
-            {
-                ResetQuickSearch();
-                return;
-            }
-
-            if (parameter.Text.Length < 3)
-            {
-                return;
-            }
-
-            QuickSearchPatients.Clear();
-            var quickSearchPatients = await _patientModel.QuickSearchPatients(parameter.Text);
-            _quickSearchPatients = quickSearchPatients.ToList();
-            quickSearchPatients.ForEach(QuickSearchPatients.Add);
-        }
-
-        [Command]
-        public void ResetQuickSearch()
-        {
-            if (_quickSearchPatients is null)
-            {
-                return;
-            }
-
-            QuickSearchPatients.Clear();
-            _quickSearchPatients.Clear();
-
-            Patients.Clear();
-            LoadPatients();
-            return;
         }
 
         private void LoadExamForPatient(PatientDto patient)

@@ -12,10 +12,5 @@ namespace ModularGridLayout.View
             InitializeComponent();
             this.DataContext = App.MainWindowVM;
         }
-
-        private void ButtonInfo_Click(object sender, RoutedEventArgs e)
-        {
-            patients.Clear();
-        }
     }
 }

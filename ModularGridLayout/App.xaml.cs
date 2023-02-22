@@ -12,8 +12,8 @@ using Services.File;
 using Services.Patient;
 using System;
 using System.Windows;
-using View.View.Test;
 using View.ViewModel;
+using View.ViewModel.CustomComponent;
 
 namespace ModularGridLayout
 {
@@ -56,22 +56,12 @@ namespace ModularGridLayout
 
         public static IServiceProvider ServiceProvider { get; private set; }
 
-        //protected async void OnStartup(StartupEventArgs e)
-        //{
-        //    await host.StartAsync();
-
-        // var window = ServiceProvider.GetRequiredService<MainWindow>(); window.Show();
-
-        //    base.OnStartup(e);
-        //}
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             await host.StartAsync();
 
-            var window = ServiceProvider.GetRequiredService<TestAutoSuggest>();
+            var window = ServiceProvider.GetRequiredService<MainWindow>();
             window.Show();
-
-            //base.OnStartup(e);
         }
 
         private void ConfigureServices(IConfiguration configuration, IServiceCollection services)
@@ -83,9 +73,6 @@ namespace ModularGridLayout
 
             services.AddDbContextFactory<PatientContext>(options =>
             {
-                //options.UseSqlite(configuration.GetConnectionString("DefaultConnection"),
-                //    o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-
                 options.UseSqlServer(configuration.GetConnectionString("SQLServerConnection"),
                     o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
             });
@@ -94,10 +81,10 @@ namespace ModularGridLayout
 
             // Register all ViewModels.
             services.AddSingleton<MainWindowViewModel>();
+            services.AddSingleton<QuickSearchViewModel>();
 
             // Register all the Windows of the applications.
             services.AddTransient<MainWindow>();
-            services.AddTransient<TestAutoSuggest>();
         }
     }
 }
